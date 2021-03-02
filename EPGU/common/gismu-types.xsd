@@ -18,11 +18,13 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="DateOrDatePeriodType">
+    <xs:complexType name="CorePersonDocument">
         <xs:annotation>
-            <xs:documentation>Дата или диапазон дат</xs:documentation>
+            <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
         </xs:annotation>
-
+        <xs:sequence>
+            <!-- TODO: описание полей документа -->
+        </xs:sequence>
     </xs:complexType>
 
 </xs:schema>
