@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        targetNamespace="urn://gismu_2/common/0.0.1"
+        xmlns="urn://gismu_2/common/0.0.1"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>Общие типы объектов для подсистем ГИСМУ</xs:documentation>
+    </xs:annotation>
+
+    <xs:simpleType name="innerID">
+        <xs:annotation>
+            <xs:documentation>Внутренний ID записи в ГИСМУ</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:long">
+            <xs:length value="19"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="DateOrDatePeriodType">
+        <xs:annotation>
+            <xs:documentation>Дата или диапазон дат</xs:documentation>
+        </xs:annotation>
+
+    </xs:complexType>
+
+</xs:schema>

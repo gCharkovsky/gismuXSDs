@@ -1,0 +1,1253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn://mvd/gismu/inv/root/1.0.0"
+           elementFormDefault="qualified"
+           xmlns:ns0="urn://mvd/gismu/inv/root/1.0.0"
+           xmlns:smev="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.2"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:ns2="urn://ibd-m/common/0.2.1"
+
+>
+    <xs:import namespace="urn://ibd-m/common/0.2.1" schemaLocation="commons/common-0.2.1.xsd"/>
+    <xs:import namespace="urn://x-artefacts-smev-gov-ru/supplementary/commons/1.2"
+               schemaLocation="commons/smev-supplementary-commons-1.2.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>Вид сведений по оформлению и выдаче приглашений на въезд в РФ иностранных граждан и лиц без
+            гражданства.
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="EPGURequest" type="ns0:EPGURequestType">
+        <xs:annotation>
+            <xs:documentation>Базовый запрос</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="EPGUResponse" type="ns0:EPGUResponseType">
+        <xs:annotation>
+            <xs:documentation>Базовый ответ</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!-- Поля и типы запроса -->
+
+    <xs:complexType name="EPGURequestType">
+        <xs:annotation>
+            <xs:documentation>Базовый запрос</xs:documentation>
+        </xs:annotation>
+
+        <xs:choice>
+            <xs:element name="formData" type="ns0:FormDataType">
+                <xs:annotation>
+                    <xs:documentation>Передача заявления от заявителя в ведомство</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="cancelRequest" type="ns0:CancelRequestType">
+                <xs:annotation>
+                    <xs:documentation>Запрос на отмену запроса на оказание государственной услуги</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="textRequest" type="ns0:TextRequestType">
+                <xs:annotation>
+                    <xs:documentation>Текстовое сообщение от заявителя в ведомство</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+
+        <xs:attribute name="env" type="ns0:EnvType" use="optional">
+            <xs:annotation>
+                <xs:documentation>Среда вызова</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Id" type="smev:string-50" use="optional">
+            <xs:annotation>
+                <xs:documentation>Идентификатор элемента</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="FormDataType">
+        <xs:sequence>
+            <xs:element name="orderId" type="xs:long">
+                <xs:annotation>
+                    <xs:documentation>Номер заявления на ЕПГУ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="serviceCode" type="smev:string-50">
+                <xs:annotation>
+                    <xs:documentation>Код услуги</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="procedureCode" type="smev:string-50">
+                <xs:annotation>
+                    <xs:documentation>Код процедуры</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="user_type" type="smev:string-50">
+                <xs:annotation>
+                    <xs:documentation>Тип заявителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:choice>
+                <xs:element name="byArtificialPerson" type="ns0:ByArtificialPerson">
+                    <xs:annotation>
+                        <xs:documentation>Приглашающей стороной выступает юридическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="byPhysicalPerson" type="ns0:ByPhysicalPerson">
+                    <xs:annotation>
+                        <xs:documentation>Приглашающей стороной выступает физическое лицо</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="validity" type="ns0:ValidType">
+                    <xs:annotation>
+                        <xs:documentation>Проверка действительности приглашения</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="readiness" type="ns0:ReadinessType">
+                    <xs:annotation>
+                        <xs:documentation>Проверка готовности приглашения</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--[Запросы][Основной] Юрлицо -->
+    <xs:complexType name="ByArtificialPerson">
+        <xs:annotation>
+            <xs:documentation>Приглашающей стороной выступает юридическое лицо</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Application" type="ns0:LegalApplicationType">
+                <xs:annotation>
+                    <xs:documentation>Запрос (приглашающей стороной выступает юридическое лицо) на предоставление услуги
+                        по оформлению и выдаче приглашений на въезд в РФ иностранных граждан и лиц без гражданства
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LegalApplicationType">
+        <xs:annotation>
+            <xs:documentation>Запрос (приглашающей стороной выступает юридическое лицо) на предоставление
+                государственной услуги
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="isFormaliseBlank" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Способ получения (В форме электронного документа/ на формализованном бланке)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="applicationRegion" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Регион подачи заявления Автоматически из региона юридического адреса. Справочник "Регионы РФ"
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="applicantLegalPerson" type="ns0:LegalApplicantType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о приглашающей организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="urgentRegistration" type="ns2:DateType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Желательно оформить в срок до. Формат даты ДД.ММ.ГГГГ Основания для срочного
+                        оформления прилагаются
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="invitedApplicant" type="ns0:InvitedApplicantType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о целях поездки, приглашаемом лице и сопровождаемых (при наличии)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AppliedDocuments" type="ns0:AppliedDocumentsType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о документах, прилагаемых к заявителю</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LegalApplicantType">
+        <xs:annotation>
+            <xs:documentation>Сведения о приглашающей организации.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- УД организации -->
+            <xs:element name="fullName" type="smev:string-500">
+                <xs:annotation>
+                    <xs:documentation>Полное наименование организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shortName" type="smev:string-200">
+                <xs:annotation>
+                    <xs:documentation>Краткое наименование организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inn" type="smev:LegalPersonINNType">
+                <xs:annotation>
+                    <xs:documentation>ИНН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ogrn" type="smev:OGRNCompanyType">
+                <xs:annotation>
+                    <xs:documentation>ОГРН</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- Информация об аккредитации-->
+            <xs:element name="accreditationNumber" type="smev:string-50" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Номер записи об аккредитации (для филиалов, представительств)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="accreditationDate" type="ns2:DateType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Дата внесения записи об аккредитации. В формате ДД.ММ.ГГГГ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- Контактная информация -->
+            <xs:element name="phoneNumber" type="smev:PhoneNumberRFType">
+                <xs:annotation>
+                    <xs:documentation>Контактный телефон с кодом города. В формате +7(XXX)XXX-XX-XX</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="additionalNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Добавочный номер к телефону, если имеется</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Адрес электронной почты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="legalPersonAddress" type="ns2:FIASAddressType">
+                <xs:annotation>
+                    <xs:documentation>Юридический адрес</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="actualAddress" type="ns2:FIASAddressType">
+                <xs:annotation>
+                    <xs:documentation>Фактический (почтовый) адрес</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- Ответственное лицо -->
+            <xs:element name="official" type="ns0:OfficialInfoType">
+                <xs:annotation>
+                    <xs:documentation>Сведения об уполномоченном лице организации, подтверждающем достоверность
+                        указанных в ходатайстве сведений на приглашаемое лицо и лиц, следующих с ним совместно.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OfficialInfoType">
+        <xs:annotation>
+            <xs:documentation>Сведения об уполномоченном лице организации</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="appoitment" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Должность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="surname" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Фамилия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Имя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="patronymic" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="birthDate" type="ns2:DateType">
+                <xs:annotation>
+                    <xs:documentation>Дата рождения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="citizenship" type="xs:string"  minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Гражданство. Справочник "Страны"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="officialAddressFIAS" type="ns2:FIASAddressType">
+                <xs:annotation>
+                    <xs:documentation>Адрес проживания/ пребывания ФИАС (если гражданство Россия)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="passportId" type="ns0:PassportIDType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--[Запросы][Основной] Физлицо -->
+    <xs:complexType name="ByPhysicalPerson">
+        <xs:annotation>
+            <xs:documentation>Приглашающей стороной выступает физическое лицо</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Application" type="ns0:PersonApplicationType">
+                <xs:annotation>
+                    <xs:documentation>Запрос (приглашающей стороной выступает физическое лицо) на предоставление услуги
+                        по оформлению и выдаче приглашений на въезд в РФ иностранных граждан и лиц без гражданства
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonApplicationType">
+        <xs:annotation>
+            <xs:documentation>Запрос (приглашающей стороной выступает физическое лицо) на предоставление государственной
+                услуги
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="isFormaliseBlank" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation>Способ получения (В форме электронного документа/ на формализованном бланке)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="applicationRegion" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Регион подачи заявления. Справочник "Регионы РФ"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="applicantPhysicalPerson" type="ns0:PersonApplicantType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о приглашающем лице</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="urgentRegistration" type="ns2:DateType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Желательно оформить в срок до. Формат даты ДД.ММ.ГГГГ Основания для срочного
+                        оформления прилагаются
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="invitedApplicant" type="ns0:InvitedApplicantType"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Сведения о целях поездки, приглашаемых лицах и сопровождаемых (при наличии)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AppliedDocuments" type="ns0:AppliedDocumentsType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о документах, прилагаемых к заявителю</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonApplicantType">
+        <xs:annotation>
+            <xs:documentation>Сведения о приглашающем лице</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="FIO" type="ns2:NameType">
+                <xs:annotation>
+                    <xs:documentation>Фамилия, имя, отчество</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="gender" type="smev:GenderType">
+                <xs:annotation>
+                    <xs:documentation>Пол. Муж/Жен</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="birthDate" type="ns2:DateType">
+                <xs:annotation>
+                    <xs:documentation>Дата рождения. В формате ДД.ММ.ГГГГ (год полностью)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="stateOfBirth" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Государство рождения. Справочник "Страны"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="placeOfBirth" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Точное место рождения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="passportID" type="ns0:PassportIDType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="citizenship" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Гражданство (подданство). Справочник "Страны"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="residencePlace" type="ns2:FIASAddressType">
+                <xs:annotation>
+                    <xs:documentation>Место регистрации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+
+            <!-- Данные для ИП -->
+            <xs:element form="qualified"  minOccurs="0" name="OGRNSoleProprietorType"
+                        type="smev:OGRNSoleProprietorType">
+                <xs:annotation>
+                    <xs:documentation>ОГРН индивидуального предпринимателя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="inn" type="smev:PhysicalPersonINNType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>ИНН физического лица</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="SNILS" type="smev:SNILSType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>СНИЛС</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+
+
+            <!-- Контактная информация-->
+            <xs:element name="phoneNumber" type="smev:PhoneNumberRFType">
+                <xs:annotation>
+                    <xs:documentation>Домашний телефон</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Адрес электронной почты</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- Трудовая деятельность -->
+            <xs:element name="employmentList" type="ns0:EmploymentListType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Сведения о деятельности за последние 5 лет</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+
+    <!--[Запросы][Основной] Общее -->
+
+    <xs:complexType name="InvitedApplicantType">
+        <xs:sequence>
+            <xs:element name="tripInformation" type="ns0:TripInfoType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о поездке</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="invitedApplicantInfo" type="ns0:InvitedApplicantInfoType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о приглашаемом лице</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="companionInfo" type="ns0:CompanionInfoType" minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Сведения о сопровождаемых лицах</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TripInfoType">
+        <xs:annotation>
+            <xs:documentation>Сведения о поездке
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="purposeOfVisit" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Цель поездки из Справочник "Цель поездки"
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="periodDays" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>На срок (дней).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="entranceDate" type="ns2:DateType">
+                <xs:annotation>
+                    <xs:documentation>Предполагаемая дата въезда в РФ. Дата в формате ДД.ММ.ГГ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="departureDate" type="ns2:DateType">
+                <xs:annotation>
+                    <xs:documentation>Предполагаемая дата убытия из РФ. Дата в формате ДД.ММ.ГГ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="numberOfEntries" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кратность визы</xs:documentation>
+                    <xs:documentation>Справочник "Кратность визы"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="visa" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Вид визы</xs:documentation>
+                    <xs:documentation>Справочник "Категория визы"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="visitPoints" type="ns0:VisitPointsType" >
+                <xs:annotation>
+                    <xs:documentation>Пункты посещения в России</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="permissionForEntrance" type="ns0:PermissionForEntranceType"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Специальное разрешение (согласование) для въезда на территорию с
+                        регламентированным посещением
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VisitPointsType">
+        <xs:annotation>
+            <xs:documentation>Пункты посещения в России</xs:documentation>
+        </xs:annotation>
+        <xs:sequence >
+            <xs:element maxOccurs="unbounded" name="visitPoint" type="ns2:FIASAddressType">
+                <xs:annotation>
+                    <xs:documentation>Пункт посещения в России. Адрес по ФИАС ло населенного пкнкта (регион, насел.
+                        пункт)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PermissionForEntranceType">
+        <xs:annotation>
+            <xs:documentation>Специальное разрешение (согласование) для въезда на территорию с регламентированным
+                посещением
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0">
+            <xs:element name="issuedBy" type="xs:string" >
+                <xs:annotation>
+                    <xs:documentation>Наименование органа, выдавшего разрешение</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="number" type="xs:string" >
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateFrom" type="ns2:DateType" >
+                <xs:annotation>
+                    <xs:documentation>От. Дата в формате ДД.ММ.ГГ.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateTo" type="ns2:DateType" >
+                <xs:annotation>
+                    <xs:documentation>На срок. Дата в формате ДД.ММ.ГГ.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CompanionInfoType">
+        <xs:annotation>
+            <xs:documentation>Сведения о споровождаемых лицах, следующих совместно</xs:documentation>
+        </xs:annotation>
+        <xs:sequence >
+            <xs:element name="degreeOfRelationship" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Степень родства. Справочник "Степень родства"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="fullName" type="ns0:FullNameType">
+                <xs:annotation>
+                    <xs:documentation>ФИО сопровождаемых лицах, следующих совместно</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="birthDate" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Дата рождения. В формате ДД.ММ.ГГГГ (год полностью)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="gender" type="smev:GenderType">
+                <xs:annotation>
+                    <xs:documentation>Пол</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="citizenship" type="xs:string" >
+                <xs:annotation>
+                    <xs:documentation>Гражданства (подданства). Справочник "Страны"+ЛБГ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="changedIdentificationData"
+                        type="ns0:ChangedIdentificationDataListType">
+                <xs:annotation>
+                    <xs:documentation>Измененные установочные данные</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InvitedApplicantInfoType">
+        <xs:annotation>
+            <xs:documentation>Сведения о приглашаемом лице</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="fullName" type="ns0:FullNameType">
+                <xs:annotation>
+                    <xs:documentation>ФИО приглашаемого лица</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="birthDate" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Дата рождения. В формате ДД.ММ.ГГГГ (год полностью)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="gender" type="smev:GenderType">
+                <xs:annotation>
+                    <xs:documentation>Пол. Муж/Жен</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="citizenship" type="xs:string" >
+                <xs:annotation>
+                    <xs:documentation>Гражданство (подданство). Справочник "Страны"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="stateOfBirth" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Государство рождения. Справочник "Страны"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="placeOfBirth" type="smev:string-500">
+                <xs:annotation>
+                    <xs:documentation>Точное место рождения
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="countryOfResidence" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Государство постоянного проживания. Справочник "Страны"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="region" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Регион в стране постоянного проживания</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="countryOfGettingVisa" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Страна, в котором есть консульское учреждение России (страна получения Визы).
+                        Справочник "Страны". параметр hasConsulate = true
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="cityOfGettingVisa" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Город, в котором есть консульское учреждение России (страна получения Визы).
+                        Справочник "Город выдачи визы"
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="workInfo" type="ns0:WorkInfoType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Сведения о работе</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="changedIdentificationData"
+                        type="ns0:ChangedIdentificationDataListType">
+                <xs:annotation>
+                    <xs:documentation>Измененные установочные данные</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="passportID" type="ns0:PassportIDType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о документе, удостоверяющем личность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="prospectiveAddress" type="ns2:FIASAddressType">
+                <xs:annotation>
+                    <xs:documentation>Адрес предполагаемого места пребывания</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="phoneNumber" type="smev:PhoneNumberRFType">
+                <xs:annotation>
+                    <xs:documentation>Предполагаемый контактный телефон с кодом города. В формате +7(XXX)XXX-XX-XX
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="additionalNumder" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Добавочный номер к телефону, если имеется</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FullNameType">
+        <xs:annotation>
+            <xs:documentation>ФИО приглашаемого лица</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+
+            <xs:element name="surnameRus" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Буквами русского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="surnameLat" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Буквами латинского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="nameRus" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Буквами русского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="nameLat" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Буквами латинского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="patronymicRus" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Буквами русского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="patronymicLat" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Буквами латинского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PassportIDType">
+        <xs:annotation>
+            <xs:documentation>Сведения о документе, удостоверяющим личность</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="DocumentType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Тип документа, удостоверяющего личность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="seria" type="smev:string-50">
+                <xs:annotation>
+                    <xs:documentation>Серия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="number" type="smev:string-50">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="IssueDate" type="ns2:DateType">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи. В формате ДД.ММ.ГГ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="validUntil" type="ns2:DateType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Действителен до. В формате ДД.ММ.ГГ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="issueDepartment" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issueCode" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Код подразделения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ChangedIdentificationDataListType">
+        <xs:annotation>
+            <xs:documentation>Изменение ФИО и установочных данных</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="changedData" type="ns0:ChangedDataType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ChangedDataType">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="prevSurnameRus" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежняя фамилия. Буквами русского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="prevSurnameLat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежняя фамилия. Буквами латинского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="prevNameRus" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежнее имя. Буквами русского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="prevNameLat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежнее имя. Буквами латинского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="prevPatronymicRus" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежнее отчество. Буквами русского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="prevPatronymicLat" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежнее отчество. Буквами латинского алфавита</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="prevBirthDate" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Прежняя дата рождения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EmploymentListType">
+        <xs:annotation>
+            <xs:documentation>Сведения о занятости</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="employment" type="ns0:EmploymentType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Информация о деятельности за период</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EmploymentType">
+        <xs:annotation>
+            <xs:documentation>Информация о занятости за период</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="employmentCategory" type="smev:digits-2">
+                <xs:annotation>
+                    <xs:documentation>Вид деятельности</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="period" type="ns0:EmploymentPeriod">
+                <xs:annotation>
+                    <xs:documentation>Период деятельности</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="workInfo" type="ns0:WorkInfoType">
+                <xs:annotation>
+                    <xs:documentation>Сведения о работе</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="WorkInfoType">
+        <xs:annotation>
+            <xs:documentation>Сведения о работе</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="organisation" type="smev:string-500" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Место работы. Полное название организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="organisationPlace" type="smev:string-500" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Адрес места работы. Полный адрес организации</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="appointment" type="smev:string-500" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Должность</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="EmploymentPeriod">
+        <xs:annotation>
+            <xs:documentation>Период занятости</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="beginningDate" type="ns0:BoundaryType">
+                <xs:annotation>
+                    <xs:documentation>Начало периода</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice>
+                <xs:element name="continuing" type="xs:boolean">
+                    <xs:annotation>
+                        <xs:documentation>По настоящее время</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="endingDate" type="ns0:BoundaryType">
+                    <xs:annotation>
+                        <xs:documentation>Окончание периода</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BoundaryType">
+        <xs:annotation>
+            <xs:documentation>Граница периода</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="month" type="smev:digits-2" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Месяц</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="year" type="smev:digits-4" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Год</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AppliedDocumentsType">
+        <xs:annotation>
+            <xs:documentation>Описание прилагаемых документов</xs:documentation>
+        </xs:annotation>
+        <xs:sequence  maxOccurs="unbounded">
+            <xs:element name="AppliedDocument" type="ns0:AppliedDocumentType">
+                <xs:annotation>
+                    <xs:documentation>Описание прилагаемого документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AppliedDocumentType">
+        <xs:annotation>
+            <xs:documentation>Описание прилагаемого документа</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element  name="codeDocument" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер документа. Строка из 4 цифр</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="name" type="smev:string-200">
+                <xs:annotation>
+                    <xs:documentation>Имя файла загруженного документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="URL" type="smev:string-200">
+                <xs:annotation>
+                    <xs:documentation>Относительный путь к файлу внутри архива</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="businessName" type="smev:string-200">
+                <xs:annotation>
+                    <xs:documentation>Бизнес-наименование документа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="type" type="smev:string-200">
+                <xs:annotation>
+                    <xs:documentation>Тип контента (например: application/pdf или любой другой общепринятый MIME-тип)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="digestValue" type="smev:string-100">
+                <xs:annotation>
+                    <xs:documentation>Хэш файла в соответствии с ГОСТ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--[Запросы] Типы простых запросов -->
+    <xs:complexType name="ValidType">
+        <xs:annotation>
+            <xs:documentation>Проверка действительности приглашения</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="priglNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер приглашения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="blankSeria" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Серия бланка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element  name="blankNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер бланка</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ReadinessType">
+        <xs:annotation>
+            <xs:documentation>Проверка готовности приглашения</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="region" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Регион. Справочник "Регионы РФ"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="birthDate" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Дата рождения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docNumber" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Номер документа, который был предоставлен в ГУВМ МВД России для оформления
+                        приглашения
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--[Запросы] Типы побочных запросов -->
+    <xs:complexType name="CancelRequestType">
+        <xs:annotation>
+            <xs:documentation>
+                Запрос на отмену заявления
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orderId" type="xs:long"/>
+            <xs:element minOccurs="0" name="reason" type="ns0:string-2048"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TextRequestType">
+        <xs:annotation>
+            <xs:documentation>
+                Текстовое сообщение от заявителя в ведомство
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orderId" type="xs:long"/>
+            <xs:element name="text" type="ns0:string-2048"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- Поля и типы ответа -->
+    <xs:complexType name="EPGUResponseType">
+        <xs:annotation>
+            <xs:documentation>Базовый ответ</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="changeOrderInfo" type="ns0:ChangeOrderInfoType">
+                <xs:annotation>
+                    <xs:documentation>Информация для изменения статуса заявления в ЛК ЕПГУ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="cancelResponse" type="ns0:CancelResponseType">
+                <xs:annotation>
+                    <xs:documentation>Уведомление об успешной отмене</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="textResponse" type="ns0:TextResponseType">
+                <xs:annotation>
+                    <xs:documentation>Ответ на текстовое сообщение от заявителя в ведомство</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="env" type="ns0:EnvType" use="optional">
+            <xs:annotation>
+                <xs:documentation>Среда вызова</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Id" type="smev:string-50" use="optional">
+            <xs:annotation>
+                <xs:documentation>Идентификатор элемента</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="CancelResponseType">
+        <xs:annotation>
+            <xs:documentation>
+                Ответ на запрос отмены заявления
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orderId" type="xs:long"/>
+            <xs:element name="result" type="ns0:CancelResponseResultType"/>
+            <xs:element minOccurs="0" name="comment" type="ns0:string-2048"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="CancelResponseResultType">
+        <xs:annotation>
+            <xs:documentation>Результат передачи запроса на отмену заявления</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CANCELLED"/>
+            <xs:enumeration value="IN_PROGRESS"/>
+            <xs:enumeration value="REJECTED"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:complexType name="ChangeOrderInfoType">
+        <xs:annotation>
+            <xs:documentation>
+                Информация для изменения статуса заявления в ЛК ЕПГУ
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orderId" type="ns0:OrderIdType"/>
+            <xs:element name="statusCode" type="ns0:StatusCodeType"/>
+            <xs:element minOccurs="0" name="comment" type="ns0:string-2048"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OrderIdType">
+        <xs:annotation>
+            <xs:documentation>
+                Номер заявки в ЛК ЕПГУ
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="pguId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StatusCodeType">
+        <xs:annotation>
+            <xs:documentation>
+                Новый статус заявления
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="orgCode" type="ns0:string-20">
+                <xs:annotation>
+                    <xs:documentation>
+                        Код ведомственного статуса
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="techCode" type="xs:byte">
+                <xs:annotation>
+                    <xs:documentation>
+                        Код статуса ЕПГУ
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="TextResponseType">
+        <xs:annotation>
+            <xs:documentation>
+                Ответ на текстовое сообщение от заявителя в ведомство
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orderId" type="xs:long"/>
+            <xs:element name="result" type="ns0:TextResponseResultType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TextResponseResultType">
+        <xs:annotation>
+            <xs:documentation>Результат передачи текстового сообщения</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OK"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
+    <!-- Служебные простые типы -->
+    <xs:simpleType name="EnvType">
+        <xs:annotation>
+            <xs:documentation>Среда вызова</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="smev:string-20">
+            <xs:enumeration value="DEV">
+                <xs:annotation>
+                    <xs:documentation>ЕПГУ (среда для разработки)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UAT">
+                <xs:annotation>
+                    <xs:documentation>ЕПГУ (среда для демонстрации)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EXUAT">
+                <xs:annotation>
+                    <xs:documentation>ЕПГУ (оперативная среда для демонстрации)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TCOD">
+                <xs:annotation>
+                    <xs:documentation>EПГУ (среда для тестирования)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCVDEV">
+                <xs:annotation>
+                    <xs:documentation>ЕПГУ (среда для разработки услуг)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PROD">
+                <xs:annotation>
+                    <xs:documentation>ЕПГУ (продуктивная среда)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="String-2000">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="string-20">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string-2048">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="2048"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
