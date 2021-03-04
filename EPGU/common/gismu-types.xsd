@@ -282,11 +282,22 @@
 
 
     <!-- 3. Документы -->
-    <xs:complexType name="CorePersonDocument">
+    <xs:complexType name="CorePersonDocumentInfo">
         <xs:annotation>
             <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="documentType" type="tns:innerID">
+                <xs:annotation>
+                    <xs:documentation>Справочник "Тип документа"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="series" type="xs:string"/>
+            <xs:element name="no" type="xs:string"/>
+            <xs:element name="dateGiven" type="tns:Date"/>
+            <xs:element name="givenByName" type="xs:string"/>
+            <xs:element name="FIO" type="tns:FIO"/>
+            <xs:element name="birthDate" type="tns:Date"/>
             <!-- TODO: описание полей документа - согласовать набор полей с подсистемами, выдающими ДУЛ -->
         </xs:sequence>
     </xs:complexType>
@@ -309,7 +320,7 @@
             <xs:documentation>Набор электронных копий документов, приложенных к заявлению</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="Attachment" type="tns:Attachment" maxOccurs="unbounded">
+            <xs:element name="attachment" type="tns:Attachment" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:documentation>Электронная копия документа</xs:documentation>
                 </xs:annotation>
@@ -326,4 +337,125 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!-- 6. Данные ФЛ -->
+    <xs:complexType name="FIO">
+        <xs:annotation>
+            <xs:documentation>ФИО (+латиница)</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="lastName" type="tns:rus-50"/>
+            <xs:element name="firstName" type="tns:rus-50"/>
+            <xs:element name="middleName" type="tns:rus-50" minOccurs="0"/>
+            <xs:element name="lastNameLat" type="tns:string-50" minOccurs="0"/>
+            <xs:element name="firstNameLat" type="tns:string-50" minOccurs="0"/>
+            <xs:element name="middleNameLat" type="tns:string-50" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 7. Адреса -->
+    <xs:complexType name="AddressObject">
+        <xs:annotation>
+            <xs:documentation>Значение из ФИАС</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="GUID" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Уникальный идентификатор записи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shortName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Краткое наименование типа объекта</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="value" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Официальное наименование</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="AddressFIAS">
+        <xs:annotation>
+            <xs:documentation>Адрес по классификатору ФИАС</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="region" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Регион. Справочник "ФИАС".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="area" type="tns:AddressObject" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Район. Справочник "ФИАС"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="city" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Город. Справочник "ФИАС".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="cityArea" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Внутригородской район. Справочник "ФИАС"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="place" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Населенный пункт. справочник "ФИАС"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="street" type="tns:AddressObject" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Улица. Справочник "ФИАС".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="additionalArea" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Доп. территория. Справочник "ФИАС"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="additionalStreet" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Улица на доп. территории. Справочник "ФИАС"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="house" type="tns:AddressObject" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Дом. Справочник "ФИАС".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="section" type="tns:AddressObject" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Корпус. Справочник "ФИАС".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="building" type="tns:AddressObject">
+                <xs:annotation>
+                    <xs:documentation>Строение. Справочник "ФИАС"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="apartment" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Квартира</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="unstructured" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Неструктурированный адрес</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="RegAddress">
+        <xs:annotation>
+            <xs:documentation>
+                Сведения о регистрации
+            </xs:documentation>
+        </xs:annotation>
+    </xs:complexType>
 </xs:schema>
