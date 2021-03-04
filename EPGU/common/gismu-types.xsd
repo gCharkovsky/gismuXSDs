@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-        targetNamespace="urn://gismu_2/common/0.0.1"
-        xmlns:tns="urn://gismu_2/common/0.0.1"
+        targetNamespace="urn://mvd/gismu/common/0.0.1"
+        xmlns:tns="urn://mvd/gismu/common/0.0.1"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         elementFormDefault="qualified">
 
@@ -59,6 +59,18 @@
         <xs:restriction base="xs:string">
             <xs:maxLength value="100"/>
             <xs:pattern value="[0-9a-zA-Z_.\-]{2,50}[@]{1}[0-9a-zA-Z_./-]{2,50}[.]{1}[a-zA-Z]{2,5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SovietStyleDocumentSeriesType">
+        <xs:annotation>
+            <xs:documentation>Серии документов, таких как свидетельства о рождении, советские паспорта, и т.д: римская
+                цифра, тире, две прописные буквы кириллицы.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="6"/>
+            <xs:pattern value="[IVXLCDM]{1,3}[\-][А-Я]{2}"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -247,7 +259,7 @@
             <xs:documentation>Сведения о работе или учебе</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="organisation" type="tns:string-250" minOccurs="0">
+            <xs:element name="organisation" type="tns:string-250">
                 <xs:annotation>
                     <xs:documentation>Место работы или учёбы. Полное название организации</xs:documentation>
                 </xs:annotation>
@@ -257,12 +269,12 @@
                     <xs:documentation>Адрес места работы или учёбы. Полный адрес организации</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="appointment" type="tns:string-250" minOccurs="0">
+            <xs:element name="appointment" type="tns:string-250">
                 <xs:annotation>
                     <xs:documentation>Должность</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="phoneNumber" type="tns:PhoneNumber">
+            <xs:element name="phoneNumber" type="tns:PhoneNumber" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Телефон</xs:documentation>
                 </xs:annotation>
@@ -282,7 +294,8 @@
 
 
     <!-- 3. Документы -->
-    <xs:complexType name="CorePersonDocumentInfo">
+    <!-- 3.1 Непосредственно документы -->
+    <xs:complexType name="CorePersonDocument">
         <xs:annotation>
             <xs:documentation>Документ, удостоверяющий личность</xs:documentation>
         </xs:annotation>
@@ -292,15 +305,135 @@
                     <xs:documentation>Справочник "Тип документа"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="series" type="xs:string"/>
-            <xs:element name="no" type="xs:string"/>
-            <xs:element name="dateGiven" type="tns:Date"/>
-            <xs:element name="givenByName" type="xs:string"/>
+            <xs:choice>
+                <xs:group ref="tns:AbstractDocumentData"/>
+                <xs:group ref="tns:PassportRFData"/>
+                <xs:group ref="tns:ForeignPassportRFData"/>
+                <xs:group ref="tns:BirthCertificateOrSovietPassportData"/>
+            </xs:choice>
+
             <xs:element name="FIO" type="tns:FIO"/>
             <xs:element name="birthDate" type="tns:Date"/>
             <!-- TODO: описание полей документа - согласовать набор полей с подсистемами, выдающими ДУЛ -->
         </xs:sequence>
     </xs:complexType>
+
+
+    <!-- 3.2 Наборы ограничений для разных типов документа -->
+    <xs:group name="AbstractDocumentData">
+        <xs:annotation>
+            <xs:documentation>
+                Данные неизвестного документа
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="seriesCode" type="tns:string-100" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Серия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docNo" type="tns:string-100">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issueDt" type="tns:Date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issuer" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="PassportRFData">
+        <xs:annotation>
+            <xs:documentation>
+                Данные паспорта гражданина РФ
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="seriesCode" type="tns:digits-4">
+                <xs:annotation>
+                    <xs:documentation>Серия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docNo" type="tns:digits-6">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issueDt" type="tns:Date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issuer" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="ForeignPassportRFData">
+        <xs:annotation>
+            <xs:documentation>
+                Данные заграничного паспорта гражданина РФ
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="seriesCode" type="tns:digits-2">
+                <xs:annotation>
+                    <xs:documentation>Серия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docNo" type="tns:digits-7">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issueDt" type="tns:Date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issuer" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="BirthCertificateOrSovietPassportData">
+        <xs:annotation>
+            <xs:documentation>Паспорт CCCP или свидетельство о рождении РФ.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="seriesCode" type="tns:SovietStyleDocumentSeriesType">
+                <xs:annotation>
+                    <xs:documentation>Серия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docNo" type="tns:digits-6">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issueDt" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issuer" type="tns:rus-and-num-250">
+                <xs:annotation>
+                    <xs:documentation>Кем выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
 
 
     <!-- 4. Дата и время -->
@@ -376,7 +509,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="AddressFIAS">
         <xs:annotation>
             <xs:documentation>Адрес по классификатору ФИАС</xs:documentation>
@@ -450,12 +582,29 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="RegAddress">
         <xs:annotation>
             <xs:documentation>
                 Сведения о регистрации
             </xs:documentation>
         </xs:annotation>
+        <xs:sequence>
+            <xs:element name="regType" type="tns:RegistrationType"/>
+            <xs:element name="startDate" type="tns:Date"/>
+            <xs:element name="endDate" type="tns:Date" minOccurs="0"/>
+            <xs:element name="address" type="tns:AddressFIAS"/>
+        </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="RegistrationType">
+        <xs:annotation>
+            <xs:documentation>
+                Тип регистрации
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="По месту жительства"/>
+            <xs:enumeration value="По месту пребывания"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

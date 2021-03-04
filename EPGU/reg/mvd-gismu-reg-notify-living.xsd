@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="urn://mvd/gismu/reg/notification/living/1.0.0"
+           elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:nsrc="urn://mvd/gismu/reg/notification/root/1.0.0"
+>
+    <xs:import namespace="urn://mvd/gismu/reg/notification/root/1.0.0" schemaLocation="common/mvd-gismu-reg-notification.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>
+            Рассылка уведомлений о постановке на учет и снятии с учета по месту жительства по месту жительства
+        </xs:documentation>
+    </xs:annotation>
+    
+    <xs:element name="livingRegistrationEvent" type="nsrc:RegistrationEvent">
+        <xs:annotation>
+            <xs:documentation>Сообщение о постановке или снятии с учета</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+</xs:schema>
