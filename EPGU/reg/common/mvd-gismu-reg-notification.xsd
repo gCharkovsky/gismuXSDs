@@ -6,6 +6,8 @@
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:nsc="urn://mvd/gismu/common/0.0.1"
 >
+        <xs:import namespace="urn://mvd/gismu/common/0.0.1" schemaLocation="../../common/gismu-types.xsd"/>
+
 
     <xs:complexType name="RegistrationEvent">
         <xs:annotation>

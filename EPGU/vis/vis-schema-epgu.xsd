@@ -3,13 +3,11 @@
            elementFormDefault="qualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:ns0="urn://mvd/gismu/VIS/1.0.0"
-           xmlns:smev="urn://mvd/gismu/vis/visacase/commons/1.0.0"
-           xmlns:ns2="urn://ibd-m/common/0.2.1"
+           xmlns:nsc="urn://mvd/gismu/common/0.0.1"
 >
 
-    <xs:import namespace="urn://ibd-m/common/0.2.1" schemaLocation="commons/common-0.2.1.xsd"/>
-    <xs:import namespace="urn://mvd/gismu/vis/visacase/commons/1.0.0"
-               schemaLocation="commons/gismu-commons-visa-1.0.0.xsd"/>
+    <xs:import namespace="urn://mvd/gismu/common/0.0.1" schemaLocation="../common/gismu-types.xsd"/>
+
 
     <xs:annotation>
         <xs:documentation>Вид сведений для формирования в электронной форме и отправки в МВД России заявлений на
@@ -35,7 +33,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="changeOrderInfo" type="ns0:ChangeOrderInfoType">
-                <xs:annotation >
+                <xs:annotation>
                     <xs:documentation>Информация для изменения статуса заявления в ЛК ЕПГУ</xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -45,7 +43,7 @@
                 <xs:documentation>Среда вызова</xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="Id" type="smev:string-50" use="optional">
+        <xs:attribute name="Id" type="nsc:string-50" use="optional">
             <xs:annotation>
                 <xs:documentation>Идентификатор элемента</xs:documentation>
             </xs:annotation>
@@ -95,7 +93,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="orgCode" type="smev:string-20">
+            <xs:element name="orgCode" type="nsc:string-20">
                 <xs:annotation>
                     <xs:documentation>
                         Код ведомственного статуса
@@ -143,7 +141,7 @@
                 <xs:documentation>Среда вызова</xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="Id" type="smev:string-50" use="optional">
+        <xs:attribute name="Id" type="nsc:string-50" use="optional">
             <xs:annotation>
                 <xs:documentation>Идентификатор элемента</xs:documentation>
             </xs:annotation>
@@ -156,6 +154,13 @@
             <xs:documentation>Форма заявки на оформление визы</xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="actionKind" type="nsc:innerID">
+                <xs:annotation>
+                    <xs:documentation>
+                        Характер необходимого действия. Справочник "Характер действий, связанных с визами"
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="visaInfo" type="ns0:VisaInfoType">
                 <xs:annotation>
                     <xs:documentation>Сведения о запрашиваемой визе</xs:documentation>
@@ -176,7 +181,7 @@
                     <xs:documentation>Данные о принимающей стороне</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="migAccountAddress" type="ns2:FIASAddressType">
+            <xs:element name="migAccountAddress" type="nsc:AddressFIAS">
                 <xs:annotation>
                     <xs:documentation>Адрес постановки на миграционный учет</xs:documentation>
                 </xs:annotation>
@@ -192,7 +197,7 @@
                 </xs:annotation>
             </xs:element>
             <xs:choice>
-                <xs:element name="workOrStudyInfo" type="ns0:WorkOrStudyInfoType">
+                <xs:element name="workOrStudyInfo" type="nsc:WorkOrStudyInfo">
                     <xs:annotation>
                         <xs:documentation>Сведения о работе</xs:documentation>
                     </xs:annotation>
@@ -227,32 +232,33 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="visaMultiplicity" type="xs:string">
+            <xs:element name="visaMultiplicity" type="nsc:innerID">
                 <xs:annotation>
                     <xs:documentation>Кратность визы</xs:documentation>
                     <xs:documentation>Справочник "Кратность визы"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="visaCategory" type="xs:string">
+            <xs:element name="visaCategory" type="nsc:innerID">
                 <xs:annotation>
                     <xs:documentation>Вид визы: Обыкновенная</xs:documentation>
                     <xs:documentation>Справочник "Вид визы"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="entryGoalUnstructured" type="xs:string">
+            <xs:element name="entryGoalUnstructured" type="nsc:innerID">
                 <xs:annotation>
                     <xs:documentation>Цель поездки</xs:documentation>
-                    <xs:documentation>Цель поездки в свободной форме</xs:documentation>
+                    <xs:documentation>Справочник "Цели поездки"</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="VisitPointsType">
         <xs:annotation>
             <xs:documentation>Пункты посещения в России</xs:documentation>
         </xs:annotation>
         <xs:sequence maxOccurs="1">
-            <xs:element maxOccurs="unbounded" name="visitPoint" type="ns2:FIASAddressType">
+            <xs:element maxOccurs="unbounded" name="visitPoint" type="nsc:AddressFIAS">
                 <xs:annotation>
                     <xs:documentation>Пункт посещения в России. Адрес по ФИАС ло населенного пкнкта (регион, насел.
                         пункт)
@@ -266,7 +272,7 @@
         <xs:annotation>
             <xs:documentation>Среда вызова</xs:documentation>
         </xs:annotation>
-        <xs:restriction base="smev:string-20">
+        <xs:restriction base="nsc:string-20">
             <xs:enumeration value="DEV">
                 <xs:annotation>
                     <xs:documentation>ЕПГУ (среда для разработки)</xs:documentation>
@@ -310,17 +316,17 @@
                     <xs:documentation>Номер заявления на ЕПГУ</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="serviceCode" type="smev:string-50">
+            <xs:element name="serviceCode" type="nsc:string-50">
                 <xs:annotation>
                     <xs:documentation>Код услуги</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="procedureCode" type="smev:string-50">
+            <xs:element name="procedureCode" type="nsc:string-50">
                 <xs:annotation>
                     <xs:documentation>Код процедуры</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="user_type" type="smev:string-50">
+            <xs:element name="user_type" type="nsc:string-50">
                 <xs:annotation>
                     <xs:documentation>Тип заявителя</xs:documentation>
                 </xs:annotation>
@@ -333,127 +339,20 @@
             <xs:documentation>Данные о заявителе</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="applicantFullName" type="ns0:FullNameType">
+            <xs:element name="personData" type="nsc:FullPersonData">
                 <xs:annotation>
-                    <xs:documentation>ФИО заявителя</xs:documentation>
+                    <xs:documentation>Данные заявителя</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="applicantBirthDate" type="ns2:DateType">
+            <xs:element name="phoneNumber" type="nsc:ContactInfo">
                 <xs:annotation>
-                    <xs:documentation>Дата рождения</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="applicantBirthPlace" type="ns0:BirthPlaceType">
-                <xs:annotation>
-                    <xs:documentation>Место рождения в формате "Страна, Город"</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="applicantGender" type="smev:GenderType">
-                <xs:annotation>
-                    <xs:documentation>Пол</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="citizenship" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Гражданство. Справочник "Страны"</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="passportID" type="ns0:PassportIDType">
-                <xs:annotation>
-                    <xs:documentation>Сведения документа, удостоверяющего личность</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="phoneNumber" type="ns0:PhoneNumberType">
-                <xs:annotation>
-                    <xs:documentation>Телефон</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="email" minOccurs="0" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Адрес электронной почты</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="faxNumber" type="ns0:PhoneNumberType" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Факс</xs:documentation>
+                    <xs:documentation>Контактная информация</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PassportIDType">
-        <xs:annotation>
-            <xs:documentation>Сведения о документе, удостоверяющим личность</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="DocumentType" type="xs:int">
-                <xs:annotation>
-                    <xs:documentation>Тип документа, удостоверяющего личность</xs:documentation>
-					<xs:documentation>Справочник "Тип документа"</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="seria" type="smev:string-50">
-                <xs:annotation>
-                    <xs:documentation>Серия</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="number" type="smev:string-50">
-                <xs:annotation>
-                    <xs:documentation>Номер</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="validFrom" type="ns2:DateType">
-                <xs:annotation>
-                    <xs:documentation>Действителен с. В формате ДД.ММ.ГГ</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="validUntil" type="ns2:DateType" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Действителен до. В формате ДД.ММ.ГГ</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
 
-    <xs:complexType name="FullNameType">
-        <xs:annotation>
-            <xs:documentation>ФИО заявителя</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="surnameRus" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Буквами русского алфавита</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="surnameLat" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Буквами латинского алфавита</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="nameRus" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Буквами русского алфавита</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="nameLat" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Буквами латинского алфавита</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="patronymicRus" minOccurs="0" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Буквами русского алфавита</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="patronymicLat" minOccurs="0" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Буквами латинского алфавита</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
     <xs:complexType name="InvitingPartyInfoType">
         <xs:annotation>
             <xs:documentation>Данные о приглашающей стороне</xs:documentation>
@@ -495,28 +394,29 @@
             <xs:documentation>Данные о стороне - юр. лице</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="organisationName" type="smev:string-500">
+            <xs:element name="organisationName" type="nsc:string-500">
                 <xs:annotation>
                     <xs:documentation>Полное наименование организации</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="INN" type="smev:LegalPersonINNType">
+            <xs:element name="INN" type="nsc:LegalPersonINN">
                 <xs:annotation>
                     <xs:documentation>ИНН</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="phoneNumber" type="ns0:PhoneNumberType">
+            <xs:element name="phoneNumber" type="nsc:PhoneNumberAdditional">
                 <xs:annotation>
-                    <xs:documentation>Контактный телефон с кодом города и добавочным номером (при наличии)
+                    <xs:documentation>
+                        Контактный телефон с кодом города и добавочным номером (при наличии)
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="email" type="xs:string" minOccurs="0">
+            <xs:element name="email" type="nsc:EmailAddress" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Адрес электронной почты</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="organisationAddress" type="ns2:FIASAddressType">
+            <xs:element name="organisationAddress" type="nsc:AddressFIAS">
                 <xs:annotation>
                     <xs:documentation>Фактический (почтовый) адрес</xs:documentation>
                 </xs:annotation>
@@ -529,132 +429,48 @@
             <xs:documentation>Данные о стороне - физ.лице</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:group ref="smev:PhysicalPersonQualifiedName-ModelGroup">
+            <xs:element name="personData" type="nsc:CorePersonDocument">
                 <xs:annotation>
-                    <xs:documentation>ФИО сопровождаемог лица, следующих совместно</xs:documentation>
-                </xs:annotation>
-            </xs:group>
-            <xs:element name="birthDate" type="ns2:DateType">
-                <xs:annotation>
-                    <xs:documentation>Дата рождения. В формате ДД.ММ.ГГГГ</xs:documentation>
+                    <xs:documentation>Данные сопровождаемого лица, следующих совместно</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="legalAddress" type="ns2:FIASAddressType">
+            <xs:element name="legalAddress" type="nsc:AddressFIAS">
                 <xs:annotation>
                     <xs:documentation>Адрес</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="phoneNumber" type="ns0:PhoneNumberType">
+            <xs:element name="contactInfo" type="nsc:ContactInfo">
                 <xs:annotation>
-                    <xs:documentation>Телефон</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="email" minOccurs="0" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Адрес электронной почты</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="passportID" type="ns0:PassportIDType">
-                <xs:annotation>
-                    <xs:documentation>Сведения документа, удостоверяющего личность</xs:documentation>
+                    <xs:documentation>Контактная информация</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PhoneNumberType">
-        <xs:annotation>
-            <xs:documentation>Телефон с добавочным номером</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="phoneNumber" type="smev:PhoneNumberRFType"/>
-            <xs:element minOccurs="0" name="additionalNumber" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Добавочный номер</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="BirthPlaceType">
-        <xs:annotation>
-            <xs:documentation>Место рождения</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="country" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Справочник "Страны"</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="placeUnstructured" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>Город</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="WorkOrStudyInfoType">
-        <xs:annotation>
-            <xs:documentation>Сведения о работе</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="organisation" type="smev:string-500" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Место работы или учёбы. Полное название организации</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="organisationPlace" type="smev:string-500" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Адрес места работы или учёбы. Полный адрес организации</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="appointment" type="smev:string-500" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Должность</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="phoneNumber" type="ns0:PhoneNumberType">
-                <xs:annotation>
-                    <xs:documentation>Телефон</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="email" type="xs:string" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Адрес электронной почты</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="faxNumber" type="ns0:PhoneNumberType" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Факс</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
 
     <xs:complexType name="CompanionInfoType">
         <xs:annotation>
             <xs:documentation>Сведения о споровождаемых лицах, следующих совместно</xs:documentation>
         </xs:annotation>
         <xs:sequence maxOccurs="1">
-            <xs:element name="relationType" type="xs:string">
+            <xs:element name="relationType" type="nsc:innerID">
                 <xs:annotation>
                     <xs:documentation>Степень родства. Справочник "Степень родства"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="fullName" type="ns0:FullNameType">
+            <xs:element name="fullName" type="nsc:FIO">
                 <xs:annotation>
                     <xs:documentation>ФИО сопровождаемог лица, следующих совместно</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="birthDate" type="xs:string">
+            <xs:element name="birthDate" type="nsc:Date">
                 <xs:annotation>
                     <xs:documentation>Дата рождения. В формате ДД.ММ.ГГГГ (год полностью)</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="citizenship" type="xs:string">
+            <xs:element name="citizenship" type="nsc:innerID">
                 <xs:annotation>
-                    <xs:documentation>Гражданство. Справочник "Страны"</xs:documentation>
+                    <xs:documentation>Гражданство. Справочник "Гражданство"</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="address" type="xs:string">
@@ -680,22 +496,22 @@
             <xs:documentation>Родственник на территории Российской Федерации</xs:documentation>
         </xs:annotation>
         <xs:sequence maxOccurs="1">
-            <xs:element name="relationType" type="xs:string">
+            <xs:element name="relationType" type="nsc:innerID">
                 <xs:annotation>
                     <xs:documentation>Степень родства. Справочник "Степень родства"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:group ref="smev:PhysicalPersonQualifiedName-ModelGroup">
+            <xs:element name="FIO" type="nsc:FIO">
                 <xs:annotation>
                     <xs:documentation>ФИО</xs:documentation>
                 </xs:annotation>
-            </xs:group>
-            <xs:element name="birthDate" type="ns2:DateType">
+            </xs:element>
+            <xs:element name="birthDate" type="nsc:Date">
                 <xs:annotation>
                     <xs:documentation>Дата рождения. В формате ДД.ММ.ГГГГ (год полностью)</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="address" type="ns2:FIASAddressType">
+            <xs:element name="address" type="nsc:AddressFIAS">
                 <xs:annotation>
                     <xs:documentation>Адрес</xs:documentation>
                 </xs:annotation>
@@ -710,6 +526,8 @@
             <xs:element name="companionInfo" type="ns0:CompanionInfoType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
+
     <xs:complexType name="ExistingVisaType">
         <xs:annotation>
             <xs:documentation>Сведения об имеющейся визе</xs:documentation>
@@ -735,7 +553,7 @@
                     <xs:documentation>Номер приглашения</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="validPeriod" type="ns2:DatePeriodType">
+            <xs:element name="validPeriod" type="nsc:DatePeriod">
                 <xs:annotation>
                     <xs:documentation>Срок действия</xs:documentation>
                 </xs:annotation>
@@ -755,6 +573,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name="AppliedDocumentType">
         <xs:annotation>
             <xs:documentation>Описание прилагаемого документа</xs:documentation>
@@ -765,28 +584,28 @@
                     <xs:documentation>Номер документа. Строка из 4 цифр</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="name" type="smev:string-200">
+            <xs:element name="name" type="nsc:string-250">
                 <xs:annotation>
                     <xs:documentation>Имя файла загруженного документа</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="URL" type="smev:string-200">
+            <xs:element name="URL" type="nsc:string-250">
                 <xs:annotation>
                     <xs:documentation>Относительный путь к файлу внутри архива</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="businessName" type="smev:string-200">
+            <xs:element name="businessName" type="nsc:string-250">
                 <xs:annotation>
                     <xs:documentation>Бизнес-наименование документа</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="type" type="smev:string-200">
+            <xs:element name="type" type="nsc:string-250">
                 <xs:annotation>
                     <xs:documentation>Тип контента (например: application/pdf или любой другой общепринятый MIME-тип)
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="digestValue" type="smev:string-100">
+            <xs:element name="digestValue" type="nsc:string-100">
                 <xs:annotation>
                     <xs:documentation>Хэш файла в соответствии с ГОСТ</xs:documentation>
                 </xs:annotation>
