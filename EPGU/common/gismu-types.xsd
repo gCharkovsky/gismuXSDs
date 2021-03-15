@@ -16,7 +16,8 @@
             <xs:documentation>Внутренний ID записи в ГИСМУ</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:long">
-            <xs:length value="19"/>
+            <xs:minInclusive value="1000000000000000000"/>
+            <xs:maxExclusive value="10000000000000000000"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -650,7 +651,7 @@
             <xs:documentation>Значение из ФИАС</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="code" type="GUID" minOccurs="0" maxOccurs="1">
+            <xs:element name="code" type="tns:GUID" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
                     <xs:documentation>Уникальный идентификатор записи</xs:documentation>
                 </xs:annotation>
