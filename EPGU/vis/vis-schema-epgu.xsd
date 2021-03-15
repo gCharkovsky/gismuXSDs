@@ -166,7 +166,7 @@
                     <xs:documentation>Сведения о запрашиваемой визе</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="applicantInfo" type="ns0:ApplicantInfoType">
+            <xs:element name="applicantInfo" type="nsc:FullPersonData">
                 <xs:annotation>
                     <xs:documentation>Данные о заявителе</xs:documentation>
                 </xs:annotation>
@@ -344,7 +344,7 @@
                     <xs:documentation>Данные заявителя</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="phoneNumber" type="nsc:ContactInfo">
+            <xs:element name="contactInfo" type="nsc:ContactInfo">
                 <xs:annotation>
                     <xs:documentation>Контактная информация</xs:documentation>
                 </xs:annotation>
@@ -431,7 +431,7 @@
         <xs:sequence>
             <xs:element name="personData" type="nsc:CorePersonDocument">
                 <xs:annotation>
-                    <xs:documentation>Данные сопровождаемого лица, следующих совместно</xs:documentation>
+                    <xs:documentation>Данные физического лица</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="legalAddress" type="nsc:AddressFIAS">

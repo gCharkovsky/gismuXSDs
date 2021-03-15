@@ -1,0 +1,11 @@
+<ns0:EPGUResponse xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:ns0="urn://mvd/gismu/VIS/1.0.0">
+    <ns0:changeOrderInfo>
+        <ns0:orderId>
+            <ns0:pguId>312541652</ns0:pguId>
+        </ns0:orderId>
+        <ns0:statusCode>
+            <ns0:orgCode>1</ns0:orgCode>
+        </ns0:statusCode>
+    </ns0:changeOrderInfo>
+</ns0:EPGUResponse>

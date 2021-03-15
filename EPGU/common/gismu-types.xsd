@@ -48,7 +48,7 @@
             <xs:documentation>Формат номера телефона</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="\+\d+ \(\d+\) \d+-\d+"/>
+            <xs:pattern value="\+\d+ \(\d+\) \d+-\d+-\d+"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -62,7 +62,7 @@
                     <xs:documentation>Основной номер телефона</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="additionalNumber" type="tns:digits-7">
+            <xs:element name="additionalNumber" type="tns:digits-7" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Добавочный номер телефона</xs:documentation>
                 </xs:annotation>
@@ -326,6 +326,7 @@
             </xs:element>
             <xs:choice>
                 <xs:group ref="tns:AbstractDocumentData"/>
+                <xs:group ref="tns:ForeignDocumentData"/>
                 <xs:group ref="tns:PassportRFData"/>
                 <xs:group ref="tns:ForeignPassportRFData"/>
                 <xs:group ref="tns:BirthCertificateOrSovietPassportData"/>
@@ -359,6 +360,45 @@
             <xs:element name="issueDt" type="tns:Date">
                 <xs:annotation>
                     <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="validityPeriod" type="tns:DatePeriod" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Срок действия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issuer" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Кем выдан</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="ForeignDocumentData">
+        <xs:annotation>
+            <xs:documentation>
+                Данные иностранного документа
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="seriesCode" type="tns:string-100" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Серия</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="docNo" type="tns:string-100">
+                <xs:annotation>
+                    <xs:documentation>Номер</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="issueDt" type="tns:Date">
+                <xs:annotation>
+                    <xs:documentation>Дата выдачи</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="validityPeriod" type="tns:DatePeriod" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Срок действия</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="issuer" type="xs:string">
@@ -547,7 +587,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="PersonDocument" type="tns:CorePersonDocument">
+            <xs:element name="personDocument" type="tns:CorePersonDocument">
                 <xs:annotation>
                     <xs:documentation>Данные документа</xs:documentation>
                 </xs:annotation>
