@@ -17,7 +17,6 @@
         </xs:annotation>
         <xs:restriction base="xs:long">
             <xs:minInclusive value="1000000000000000000"/>
-            <xs:maxExclusive value="10000000000000000000"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -326,11 +325,12 @@
                 </xs:annotation>
             </xs:element>
             <xs:choice>
-                <xs:group ref="tns:AbstractDocumentData"/>
-                <xs:group ref="tns:ForeignDocumentData"/>
-                <xs:group ref="tns:PassportRFData"/>
-                <xs:group ref="tns:ForeignPassportRFData"/>
-                <xs:group ref="tns:BirthCertificateOrSovietPassportData"/>
+                <xs:element name="abstractDocument" type="tns:AbstractDocumentData"/>
+                <xs:element name="foreignDocument" type="tns:ForeignDocumentData"/>
+                <xs:element name="passportRF" type="tns:PassportRFData"/>
+                <xs:element name="foreinPassportRF" type="tns:ForeignPassportRFData"/>
+                <xs:element name="sovietPassport" type="tns:BirthCertificateOrSovietPassportData"/>
+                <xs:element name="birthCertificate" type="tns:BirthCertificateOrSovietPassportData"/>
             </xs:choice>
 
             <xs:element name="FIO" type="tns:FIO"/>
@@ -341,7 +341,7 @@
 
 
     <!-- 3.2 Наборы ограничений для разных типов документа -->
-    <xs:group name="AbstractDocumentData">
+    <xs:complexType name="AbstractDocumentData">
         <xs:annotation>
             <xs:documentation>
                 Данные неизвестного документа
@@ -374,8 +374,8 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-    </xs:group>
-    <xs:group name="ForeignDocumentData">
+    </xs:complexType>
+    <xs:complexType name="ForeignDocumentData">
         <xs:annotation>
             <xs:documentation>
                 Данные иностранного документа
@@ -408,8 +408,8 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-    </xs:group>
-    <xs:group name="PassportRFData">
+    </xs:complexType>
+    <xs:complexType name="PassportRFData">
         <xs:annotation>
             <xs:documentation>
                 Данные паспорта гражданина РФ
@@ -437,8 +437,8 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-    </xs:group>
-    <xs:group name="ForeignPassportRFData">
+    </xs:complexType>
+    <xs:complexType name="ForeignPassportRFData">
         <xs:annotation>
             <xs:documentation>
                 Данные заграничного паспорта гражданина РФ
@@ -466,8 +466,8 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-    </xs:group>
-    <xs:group name="BirthCertificateOrSovietPassportData">
+    </xs:complexType>
+    <xs:complexType name="BirthCertificateOrSovietPassportData">
         <xs:annotation>
             <xs:documentation>Паспорт CCCP или свидетельство о рождении РФ.</xs:documentation>
         </xs:annotation>
@@ -493,7 +493,7 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-    </xs:group>
+    </xs:complexType>
 
 
     <!-- 4. Дата и время -->
