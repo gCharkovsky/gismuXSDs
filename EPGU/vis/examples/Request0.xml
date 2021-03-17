@@ -220,6 +220,7 @@
             </ns0:validPeriod>
         </ns0:existingVisa>
     </ns0:visaForm>
+    <ns0:targetDepartment>2398606909331477702</ns0:targetDepartment>
     <ns0:AppliedDocuments>
         <ns0:AppliedDocument>
             <ns0:codeDocument>1234</ns0:codeDocument>
