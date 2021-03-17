@@ -13,8 +13,9 @@
             <ns0:entryGoalUnstructured>2394474307821507587</ns0:entryGoalUnstructured>
         </ns0:visaInfo>
         <ns0:applicantInfo>
-                <nsc:personDocument>
-                    <nsc:documentType>2398686962773923072</nsc:documentType>
+            <nsc:personDocument>
+                <nsc:documentType>2398686962773923072</nsc:documentType>
+                <nsc:foreignDocument>
                     <nsc:seriesCode>44</nsc:seriesCode>
                     <nsc:docNo>341298</nsc:docNo>
                     <nsc:issueDt>2017-12-30</nsc:issueDt>
@@ -23,30 +24,33 @@
                         <nsc:end>2077-12-30</nsc:end>
                     </nsc:validityPeriod>
                     <nsc:issuer>Bundestag migration department</nsc:issuer>
-                    <nsc:FIO>
-                        <nsc:lastName>Мюллер</nsc:lastName>
-                        <nsc:firstName>Карл</nsc:firstName>
-                        <nsc:lastNameLat>Muller</nsc:lastNameLat>
-                        <nsc:firstNameLat>Carl</nsc:firstNameLat>
-                    </nsc:FIO>
-                    <nsc:birthDate>1981-11-20</nsc:birthDate>
-                </nsc:personDocument>
-                <nsc:gender>Male</nsc:gender>
-                <nsc:birthCountry>2403833660655539636</nsc:birthCountry>
-                <nsc:birthPlace>
-                    <nsc:CountryCyr>Федеративная Республика Германия</nsc:CountryCyr>
-                    <nsc:Region>Трир</nsc:Region>
-                </nsc:birthPlace>
-                <nsc:citizenship>2443505663490397390</nsc:citizenship>
+                </nsc:foreignDocument>
+                <nsc:FIO>
+                    <nsc:lastName>Мюллер</nsc:lastName>
+                    <nsc:firstName>Карл</nsc:firstName>
+                    <nsc:lastNameLat>Muller</nsc:lastNameLat>
+                    <nsc:firstNameLat>Carl</nsc:firstNameLat>
+                </nsc:FIO>
+                <nsc:birthDate>1981-11-20</nsc:birthDate>
+            </nsc:personDocument>
+            <nsc:gender>Male</nsc:gender>
+            <nsc:birthCountry>2403833660655539636</nsc:birthCountry>
+            <nsc:birthPlace>
+                <nsc:CountryCyr>Федеративная Республика Германия</nsc:CountryCyr>
+                <nsc:Region>Трир</nsc:Region>
+            </nsc:birthPlace>
+            <nsc:citizenship>2443505663490397390</nsc:citizenship>
         </ns0:applicantInfo>
         <ns0:invitingPartyInfo>
             <ns0:physicalPersonPartyInfo>
                 <ns0:personData>
                     <nsc:documentType>2388519140798239941</nsc:documentType>
-                    <nsc:seriesCode>4091</nsc:seriesCode>
-                    <nsc:docNo>992001</nsc:docNo>
-                    <nsc:issueDt>2001-11-26</nsc:issueDt>
-                    <nsc:issuer>УФМС России по Калининградской обл.</nsc:issuer>
+                    <nsc:passportRF>
+                        <nsc:seriesCode>4091</nsc:seriesCode>
+                        <nsc:docNo>992001</nsc:docNo>
+                        <nsc:issueDt>2001-11-26</nsc:issueDt>
+                        <nsc:issuer>УФМС России по Калининградской обл.</nsc:issuer>
+                    </nsc:passportRF>
                     <nsc:FIO>
                         <nsc:lastName>Коваленко</nsc:lastName>
                         <nsc:firstName>Геннадий</nsc:firstName>
@@ -88,10 +92,12 @@
             <ns0:physicalPersonPartyInfo>
                 <ns0:personData>
                     <nsc:documentType>2388519140798239941</nsc:documentType>
-                    <nsc:seriesCode>4091</nsc:seriesCode>
-                    <nsc:docNo>992001</nsc:docNo>
-                    <nsc:issueDt>2001-11-26</nsc:issueDt>
-                    <nsc:issuer>УФМС России по Калининградской обл.</nsc:issuer>
+                    <nsc:passportRF>
+                        <nsc:seriesCode>4091</nsc:seriesCode>
+                        <nsc:docNo>992001</nsc:docNo>
+                        <nsc:issueDt>2001-11-26</nsc:issueDt>
+                        <nsc:issuer>УФМС России по Калининградской обл.</nsc:issuer>
+                    </nsc:passportRF>
                     <nsc:FIO>
                         <nsc:lastName>Коваленко</nsc:lastName>
                         <nsc:firstName>Геннадий</nsc:firstName>
